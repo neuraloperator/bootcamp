@@ -1,8 +1,6 @@
 default: &DEFAULT
 
   #General
-  # For computing compression
-  n_params_baseline: None #If None, will be computed
   verbose: True
   arch: 'tfno2d'
 
@@ -55,14 +53,13 @@ default: &DEFAULT
 
   # Dataset related
   data:
-    #folder: '/Users/jean/data/darcy_small/'
-    folder: '/data/darcy_flow/'
+    folder: "/dli/task/bootcamp/data/darcy_flow/"
     batch_size: 32
     n_train: 3000
     train_resolution: 32
-    n_tests: [500, 500] #, 1000]
-    test_resolutions: [32, 64] #, 1024] 
-    test_batch_sizes: [32, 32] #, 1]
+    n_tests: [500, 500] 
+    test_resolutions: [32, 64] 
+    test_batch_sizes: [32, 32]
     positional_encoding: True
 
     encode_input: True
