@@ -1,0 +1,78 @@
+default: &DEFAULT
+
+  #General
+  verbose: True
+  arch: 'tfno2d'
+
+  #Distributed computing
+  distributed:
+    use_distributed: False
+
+  # FNO related
+  tfno2d:
+    lifting_channels: 32
+    data_channels: 3
+    n_modes_height: 12
+    n_modes_width: 12
+    hidden_channels: 32
+    projection_channels: 32
+    n_layers: 4
+    domain_padding: None #0.078125
+    domain_padding_mode: 'one-sided' #symmetric
+    fft_norm: 'forward'
+    norm: None
+    skip: 'linear'
+    implementation: 'factorized'
+    separable: 0
+    preactivation: 0
+    
+    use_mlp: 1
+    mlp:
+        expansion: 0.5
+        dropout: 0
+
+    factorization: 'tucker'
+    rank: 0.2
+    fixed_rank_modes: None
+    dropout: 0.0
+    tensor_lasso_penalty: 0.0
+    joint_factorization: False
+
+  # Optimizer
+  opt:
+    n_epochs: 150
+    learning_rate: 5e-3
+    training_loss: 'h1'
+    weight_decay: 1e-4
+    amp_autocast: False
+
+    scheduler_T_max: 300 # For cosine only, typically take n_epochs
+    scheduler_patience: 5 # For ReduceLROnPlateau only
+    scheduler: 'CosineAnnealingLR' # Or 'CosineAnnealingLR' OR 'ReduceLROnPlateau' OR 'StepLR'
+    step_size: 50
+    gamma: 0.5
+
+  # Dataset related
+  data:
+    folder: "/dli/task/bootcamp/data/darcy_flow/"
+    batch_size: 32
+    n_train: 3000
+    train_resolution: 32
+    n_tests: [500, 500] 
+    test_resolutions: [32, 64] 
+    test_batch_sizes: [32, 32]
+    positional_encoding: True
+
+    encode_input: True
+    encode_output: False
+
+  # Patching
+  patching:
+    levels: 0
+    padding: 0
+    stitching: False
+
+  # Weights and biases
+  wandb:
+    log: False
+    log_test_interval: 1
